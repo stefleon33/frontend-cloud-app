@@ -6,7 +6,10 @@ const ObjectList = () => {
 
     useEffect(() => {
         axios.get("http://184.73.251.143:3000/list-objects")
-            .then(response => setObjects(response.data.Contents || []))
+            .then(response => {
+                console.log(response.data); // Log the full response
+                setObjects(response.data.Contents || []);
+            })
             .catch(error => console.error("Error fetching objects:", error));
     }, []);
 

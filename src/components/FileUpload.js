@@ -12,7 +12,7 @@ const FileUpload = () => {
         const formData = new FormData();
         formData.append("image", file);
 
-        axios.post("http://localhost:3000/upload", formData)
+        axios.post("http://184.73.251.143:3000/upload", formData)
             .then(() => alert("File uploaded successfully!"))
             .catch(error => console.error("Error uploading file:", error));
     };

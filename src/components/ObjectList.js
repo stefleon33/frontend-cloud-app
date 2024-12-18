@@ -3,7 +3,7 @@ import axios from "axios";
 
 const ObjectList = () => {
     const [objects, setObjects] = useState([]);
-    const bucketName = process.env.REACT_APP_BUCKET_NAME; // Make sure to set this in your .env file
+    const bucketName = process.env.REACT_APP_BUCKET_NAME;
 
     useEffect(() => {
         const apiUrl = process.env.REACT_APP_API_URL;

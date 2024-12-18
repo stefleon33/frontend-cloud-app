@@ -3,7 +3,6 @@ import axios from "axios";
 
 const ObjectList = () => {
     const [objects, setObjects] = useState([]);
-    const bucketName = process.env.REACT_APP_BUCKET_NAME;
 
     useEffect(() => {
         const apiUrl = process.env.REACT_APP_API_URL;
@@ -13,7 +12,9 @@ const ObjectList = () => {
         axios.get(`${apiUrl}/list-objects`)
             .then(response => {
                 console.log("Objects fetched:", response.data); // Debugging line
-                setObjects(response.data.objects || []);
+                // Filter out the 'uploads/' folder and only show files inside it
+                const files = response.data.Contents.filter(object => !object.Key.endsWith('/'));
+                setObjects(files || []);
             })
             .catch(error => {
                 console.error("Error fetching objects:", error);
@@ -25,12 +26,12 @@ const ObjectList = () => {
             <h1>Objects in Bucket</h1>
             <ul>
                 {objects.length === 0 ? (
-                    <li>No objects found in the bucket.</li>
+                    <li>No objects found in the uploads folder.</li>
                 ) : (
                     objects.map((object) => (
                         <li key={object.Key}>
                             {object.Key} ({object.Size} bytes)
-                            <a href={`https://${bucketName}.s3.amazonaws.com/${object.Key}`} download>
+                            <a href={`${process.env.REACT_APP_API_URL}/download/${object.Key}`} download>
                                 {" "}Download
                             </a>
                         </li>
@@ -42,3 +43,4 @@ const ObjectList = () => {
 };
 
 export default ObjectList;
+

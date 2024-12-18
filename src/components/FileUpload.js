@@ -21,7 +21,7 @@ const FileUpload = () => {
             return;
         }
 
-        axios.post(`${apiUrl}/upload`, formData)
+        axios.post(`${apiUrl}/uploads`, formData)
             .then(() => alert("File uploaded successfully!"))
             .catch(error => console.error("Error uploading file:", error));
     };

@@ -31,9 +31,9 @@ const ObjectList = () => {
                     objects.map((object) => (
                         <li key={object.Key}>
                             {object.Key} ({object.Size} bytes)
-                            <a href={`${process.env.REACT_APP_API_URL}/download/${object.Key}`} download>
-                                {" "}Download
-                            </a>
+                        <a href={`${process.env.REACT_APP_API_URL}/download/${object.Key.split('/')[1]}`} target="_blank" rel="noopener noreferrer">
+                            Download {object.Key.split('/')[1]}
+                        </a>
                         </li>
                     ))
                 )}

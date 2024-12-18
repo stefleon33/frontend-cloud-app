@@ -8,25 +8,33 @@ const ObjectList = () => {
         // Use the API URL from the environment variable
         const apiUrl = process.env.REACT_APP_API_URL;
 
+        // Fetch the list of objects from the backend
         axios.get(`${apiUrl}/list-objects`)
-            .then(response => setObjects(response.data.Contents || []))
-            .catch(error => console.error("Error fetching objects:", error));
+            .then(response => {
+                console.log("Objects fetched:", response.data); // Debugging line
+                setObjects(response.data || []);
+            })
+            .catch(error => {
+                console.error("Error fetching objects:", error);
+            });
     }, []);
-
 
     return (
         <div>
             <h1>Objects in Bucket</h1>
             <ul>
-                {objects.map((object) => (
-                    <li key={object.Key}>
-                        {object.Key} ({object.Size} bytes)
-                        <a href={`${process.env.REACT_APP_API_URL}/download/${object.Key}`} download>
-                            {" "}
-                            Download
-                        </a>
-                    </li>
-                ))}
+                {objects.length === 0 ? (
+                    <li>No objects found in the bucket.</li>
+                ) : (
+                    objects.map((object) => (
+                        <li key={object.Key}>
+                            {object.Key} ({object.Size} bytes)
+                            <a href={`${process.env.REACT_APP_API_URL}/download/${object.Key}`} download>
+                                {" "}Download
+                            </a>
+                        </li>
+                    ))
+                )}
             </ul>
         </div>
     );

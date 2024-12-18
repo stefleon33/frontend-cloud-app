@@ -14,11 +14,18 @@ const FileUpload = () => {
 
         // Use the environment variable for the API URL
         const apiUrl = process.env.REACT_APP_API_URL;
+        console.log('API URL:', apiUrl); // Debug the API URL
+
+        if (!apiUrl) {
+            alert("API URL is not defined. Check your .env.production file.");
+            return;
+        }
 
         axios.post(`${apiUrl}/upload`, formData)
             .then(() => alert("File uploaded successfully!"))
             .catch(error => console.error("Error uploading file:", error));
     };
+
 
     return (
         <div>

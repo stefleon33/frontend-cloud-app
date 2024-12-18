@@ -3,6 +3,7 @@ import axios from "axios";
 
 const ObjectList = () => {
     const [objects, setObjects] = useState([]);
+    const bucketName = process.env.REACT_APP_BUCKET_NAME; // Make sure to set this in your .env file
 
     useEffect(() => {
         const apiUrl = process.env.REACT_APP_API_URL;
@@ -29,7 +30,7 @@ const ObjectList = () => {
                     objects.map((object) => (
                         <li key={object.Key}>
                             {object.Key} ({object.Size} bytes)
-                            <a href={`${process.env.REACT_APP_API_URL}/download/${object.Key}`} download>
+                            <a href={`https://${bucketName}.s3.amazonaws.com/${object.Key}`} download>
                                 {" "}Download
                             </a>
                         </li>
